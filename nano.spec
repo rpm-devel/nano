@@ -7,15 +7,12 @@
 
 Summary:         A small text editor
 Name:            nano
-Version:         5.8
-Release:         4%{?dist}
-License:         GPLv3+
+Version:         9.0
+Release:         1%{?dist}
+License:         GPL-3.0-or-later
 URL:             https://www.nano-editor.org
 Source:          https://www.nano-editor.org/dist/latest/%{name}-%{version}.tar.xz
 Source2:         nanorc
-
-# fix infinite recursion when handling an error (#1976410)
-Patch1:          nano-5.8-die-infinite-recursion.patch
 
 # Shell snippets for default-editor setup
 Source11:        nano-default-editor.sh
@@ -32,6 +29,7 @@ BuildRequires:   ncurses-devel
 BuildRequires:   sed
 BuildRequires:   texinfo
 Conflicts:       filesystem < 3
+Obsoletes:       nano < %{version}-%{release}
 
 %description
 GNU nano is a small and friendly text editor.
@@ -44,6 +42,7 @@ Requires:        nano = %{version}-%{release}
 Provides:        system-default-editor
 Conflicts:       system-default-editor
 #BuildArch:       noarch
+Obsoletes:       nano-default-editor < %{version}-%{release}
 
 %description default-editor
 This package ensures the EDITOR shell variable
@@ -54,6 +53,7 @@ Summary:         Metapackage for DNF group
 #Recommends:      nano-default-editor
 Requires:        system-default-editor
 #BuildArch:       noarch
+Obsoletes:       default-editor < %{version}-%{release}
 
 %description -n default-editor
 The package acts as a placeholder in DNF group 'Standard', which will
@@ -125,6 +125,11 @@ install -Dpm 0644 %{SOURCE13} %{buildroot}%{_datadir}/fish/vendor_conf.d/%{basen
 %endif
 
 %changelog
+* Fri Apr 24 2026 CasjaysDev <rpm-devel@casjaysdev.pro> - 9.0-1
+- Update to 9.0
+- Remove version-specific patches
+- Rebuilt for AlmaLinux 10
+
 * Thu Oct 30 2021 CasjaysDev <rpm-devel@casjaysdev.pro> - 5.8.4
 - Rebuilt for CentOS 7
 
