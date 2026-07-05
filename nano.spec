@@ -1,17 +1,11 @@
-# build nano-default-editor by default only on fedora
-#%if 0%{?fedora}
-#%bcond_without default_editor
-#%else
-#%bcond_with default_editor
-#%endif
-
 Summary:         A small text editor
 Name:            nano
-Version:         9.0
+Version:         9.1
 Release:         1%{?dist}
 License:         GPL-3.0-or-later
 URL:             https://www.nano-editor.org
-Source:          https://www.nano-editor.org/dist/latest/%{name}-%{version}.tar.xz
+ExclusiveArch:   x86_64 aarch64
+Source:          https://ftp.gnu.org/gnu/nano/%{name}-%{version}.tar.xz
 Source2:         nanorc
 
 # Shell snippets for default-editor setup
@@ -104,7 +98,8 @@ install -Dpm 0644 %{SOURCE13} %{buildroot}%{_datadir}/fish/vendor_conf.d/%{basen
 %endif
 
 %files -f build/%{name}.lang
-%doc AUTHORS COPYING ChangeLog INSTALL NEWS README THANKS TODO
+%license COPYING
+%doc AUTHORS ChangeLog INSTALL NEWS README THANKS TODO
 %doc build/doc/sample.nanorc
 %doc doc/{faq,nano}.html
 %{_bindir}/*
@@ -125,6 +120,14 @@ install -Dpm 0644 %{SOURCE13} %{buildroot}%{_datadir}/fish/vendor_conf.d/%{basen
 %endif
 
 %changelog
+* Sat Jul 05 2026 CasjaysDev <rpm-devel@casjaysdev.pro> - 9.1-1
+- Update to 9.1 (GNU FTP URL verified HTTP 200)
+- Source: use stable GNU FTP URL instead of /dist/latest/
+- Remove commented-out %%bcond block
+
+* Thu Jul 03 2026 CasjaysDev <rpm-devel@casjaysdev.pro> - 9.0-1
+- Add ExclusiveArch: x86_64 aarch64; %%license COPYING
+
 * Fri Apr 24 2026 CasjaysDev <rpm-devel@casjaysdev.pro> - 9.0-1
 - Update to 9.0
 - Remove version-specific patches
