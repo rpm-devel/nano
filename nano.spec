@@ -35,7 +35,6 @@ Requires:        nano = %{version}-%{release}
 # Ensure that only one package with this capability is installed
 Provides:        system-default-editor
 Conflicts:       system-default-editor
-#BuildArch:       noarch
 Obsoletes:       nano-default-editor < %{version}-%{release}
 
 %description default-editor
@@ -46,7 +45,6 @@ is set in common shells to GNU nano.
 Summary:         Metapackage for DNF group
 #Recommends:      nano-default-editor
 Requires:        system-default-editor
-#BuildArch:       noarch
 Obsoletes:       default-editor < %{version}-%{release}
 
 %description -n default-editor
@@ -121,6 +119,11 @@ install -Dpm 0644 %{SOURCE13} %{buildroot}%{_datadir}/fish/vendor_conf.d/%{basen
 
 %changelog
 * Sat Jul 05 2026 CasjaysDev <rpm-devel@casjaysdev.pro> - 9.1-1
+- Multi-distro audit (RHEL/CentOS 7+, Alma/Rocky/Oracle 8+, Fedora 40+, openSUSE/SLES):
+  no BuildRequires diverge by distro (file-devel, gettext-devel, gcc, git, groff,
+  make, ncurses-devel, sed, texinfo all verified identical on openSUSE/SLES); no
+  EL7 macro fallback needed. Removed stray commented-out #BuildArch: noarch lines
+  from the default-editor subpackages (dead comments, no functional change).
 - Update to 9.1 (GNU FTP URL verified HTTP 200)
 - Source: use stable GNU FTP URL instead of /dist/latest/
 - Remove commented-out %%bcond block
